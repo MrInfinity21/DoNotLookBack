@@ -4,6 +4,7 @@ using UnityEngine;
 public class UserInterface : MonoBehaviour
 {
     public static UserInterface instance;
+    private int _viewBarFillAmount = 100;
     [SerializeField] private TextMeshProUGUI _viewBar;
 
     private void Awake()
@@ -18,15 +19,24 @@ public class UserInterface : MonoBehaviour
         }
     }
 
-    public void UpdateViewBar()
+    public void UpdateViewBar(bool isLooking)
     {
-
+        if (isLooking)
+        {
+            _viewBarFillAmount++;
+        }
+        else
+        {
+            _viewBarFillAmount--;
+            if (_viewBarFillAmount <= 0)
+                GameManager.instance.EndGame();
+        }
     }
 
     public void IsLookingUpdate(bool isLooking)
     {
         if (isLooking)
-            _viewBar.text = "Looking...";
+            _viewBar.text = "...";
         else
             _viewBar.text = "NOT LOOKING";
     }
