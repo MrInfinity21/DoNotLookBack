@@ -1,11 +1,18 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UserInterface : MonoBehaviour
 {
     public static UserInterface instance;
-    private int _viewBarFillAmount = 100;
+    
+    
     [SerializeField] private TextMeshProUGUI _viewBar;
+
+    [Header("Player Gauge")]
+    private int _viewBarFillAmount = 100;
+    private float _currentGauge;
+    [SerializeField] private Image _playerGauge;
 
     private void Awake()
     {
@@ -17,6 +24,9 @@ public class UserInterface : MonoBehaviour
         {
             Destroy(instance);
         }
+
+        _currentGauge = _viewBarFillAmount;
+        
     }
 
     public void UpdateViewBar(bool isLooking)
@@ -27,7 +37,9 @@ public class UserInterface : MonoBehaviour
         }
         else
         {
+            _playerGauge.fillAmount = _viewBarFillAmount;
             _viewBarFillAmount--;
+            
             if (_viewBarFillAmount <= 0)
                 GameManager.instance.EndGame();
         }
