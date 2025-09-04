@@ -10,7 +10,7 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _viewBar;
 
     [Header("Player Gauge")]
-    private int _viewBarFillAmount = 100;
+    private float _viewBarFillAmount = 100f;
     private float _currentGauge;
     [SerializeField] private Image _playerGauge;
 
@@ -33,12 +33,12 @@ public class UserInterface : MonoBehaviour
     {
         if (isLooking)
         {
-            _viewBarFillAmount++;
+            _viewBarFillAmount += Time.deltaTime;
         }
         else
         {
-            _playerGauge.fillAmount = _viewBarFillAmount;
-            _viewBarFillAmount--;
+            _playerGauge.fillAmount = _viewBarFillAmount / 100;
+            _viewBarFillAmount -= Time.deltaTime;
             
             if (_viewBarFillAmount <= 0)
                 GameManager.instance.EndGame();
